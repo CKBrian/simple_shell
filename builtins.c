@@ -17,10 +17,22 @@ void _exiting(input_t *cmd)
 		if (cmd->argv[1])
 		{
 			status = atoi(cmd->argv[1]);
+
+	/*free struct elements, path element and cmd struct pointer*/
+			if (cmd->pathFlag == 0)
+				free(cmd->path);
 			free_struct(cmd);
+			free(cmd);
+
 			exit(status);
 		}
+
+	/*free struct elements, path element and cmd struct pointer*/
+	if (cmd->pathFlag == 0)
+		free(cmd->path);
 	free_struct(cmd);
+	free(cmd);
+
 	exit(EXIT_SUCCESS);
 	}
 }

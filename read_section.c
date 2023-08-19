@@ -21,7 +21,8 @@ input_t *get_input(char **env)
 
 		temp = malloc(sizeof(input_t));
 		temp->argv = cmd_arg(args);
-		if (_strncmp("/", args, 1) == 0)
+		/*if (_strncmp("/", args, 1) == 0)*/
+		if (args[0] == '/')
 		{
 			temp->path = temp->argv[0];
 			temp->pathFlag = 1;
