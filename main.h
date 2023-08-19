@@ -36,5 +36,6 @@ char *com_path(char *cmd_name);
 char **path_find(char **env_p);
 void free_struct(input_t *f);
 int _strncmp(char *s1, char *s2, int n);
+void _exiting(input_t *cmd);
 
 #endif /* MAIN_H */

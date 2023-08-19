@@ -34,6 +34,7 @@ int main(int ac, char **av, char **envp)
 	while (1)
 	{
 		cmd = get_input(envp);
+		_exiting(cmd);
 		exec_section(cmd);
 
 		/*free(args);*/

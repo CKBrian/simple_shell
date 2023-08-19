@@ -18,11 +18,7 @@ input_t *get_input(char **env)
 			free(args);
 			exit(98);
 		}
-		if (_strncmp(args, "exit", 4) == 0)
-		{
-			free(args);
-			exit(EXIT_SUCCESS);
-		}
+
 		temp = malloc(sizeof(input_t));
 		temp->argv = cmd_arg(args);
 		if (_strncmp("/", args, 1) == 0)
