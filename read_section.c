@@ -20,6 +20,8 @@ input_t *get_input(char **env)
 		}
 
 		temp = malloc(sizeof(input_t));
+		if (temp == NULL)
+			return (NULL);
 		temp->argv = cmd_arg(args);
 		/*if (_strncmp("/", args, 1) == 0)*/
 		if (args[0] == '/')

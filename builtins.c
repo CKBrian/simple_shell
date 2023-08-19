@@ -36,3 +36,25 @@ void _exiting(input_t *cmd)
 	exit(EXIT_SUCCESS);
 	}
 }
+
+/**
+  * _env - prints the current environment
+  * @cmd: pointer to a structure
+  * @env_p: pointer to environment variables
+  * Return: Nothing
+  */
+
+void _env(input_t *cmd, char **env_p)
+{
+	int i = 0;
+
+	if (_strncmp(cmd->argv[0], "env", 3) == 0)
+	{
+		while (env_p[i] != NULL)
+		{
+			write(STDOUT_FILENO, env_p[i], _strlen(env_p[i]));
+			write(2, "\n", 1);
+			i++;
+		}
+	}
+}

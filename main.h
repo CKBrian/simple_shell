@@ -37,5 +37,6 @@ char **path_find(char **env_p);
 void free_struct(input_t *f);
 int _strncmp(char *s1, char *s2, int n);
 void _exiting(input_t *cmd);
+void _env(input_t *cmd, char **env_p);
 
 #endif /* MAIN_H */

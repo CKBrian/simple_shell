@@ -35,7 +35,10 @@ int main(int ac, char **av, char **envp)
 	{
 		cmd = get_input(envp);
 		_exiting(cmd);
-		exec_section(cmd);
+		if (_strncmp(cmd->argv[0], "env", 3) == 0)
+        		_env(cmd, envp);
+		else
+			exec_section(cmd);
 
 		/*free(args);*/
 		free_struct(cmd);
