@@ -38,5 +38,6 @@ void free_struct(input_t *f);
 int _strncmp(char *s1, char *s2, int n);
 void _exiting(input_t *cmd);
 void _env(input_t *cmd, char **env_p);
-
+void _chdir(input_t *cmd);
+char *_getline(char *str, int *size, FILE *stream);
 #endif /* MAIN_H */

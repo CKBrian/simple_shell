@@ -48,13 +48,22 @@ void _env(input_t *cmd, char **env_p)
 {
 	int i = 0;
 
-	if (_strncmp(cmd->argv[0], "env", 3) == 0)
+	(void)cmd;
+	while (env_p[i] != NULL)
 	{
-		while (env_p[i] != NULL)
-		{
-			write(STDOUT_FILENO, env_p[i], _strlen(env_p[i]));
-			write(2, "\n", 1);
-			i++;
-		}
+		write(STDOUT_FILENO, env_p[i], _strlen(env_p[i]));
+		write(2, "\n", 1);
+		i++;
 	}
+}
+
+/**
+  * _chdir - changes current directory
+  * @cmd: pointer to a structure
+  * Return: Nothing
+  */
+void _chdir(input_t *cmd)
+{
+	if (chdir(cmd->argv[0]) != 0)
+		perror("Error: chdir failed\n");
 }

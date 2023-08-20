@@ -7,23 +7,24 @@
 input_t *get_input(char **env)
 {
 	char *args = NULL;
-	size_t len = 0;
+	int len = 0;
 	input_t *temp;
 
 		if (write(STDOUT_FILENO, "($) ", _strlen("($) ")) == -1)
 			perror("Error: Write failed\n");
-		if (getline(&args, &len, stdin) == -1)
+		args = _getline(args, &len, STDIN_FILENO);
+		if (args == NULL)
 		{
 			perror("Error: getline failed or EOF\n");
 			free(args);
 			exit(98);
 		}
 
+		printf("%s\n", args);
 		temp = malloc(sizeof(input_t));
 		if (temp == NULL)
 			return (NULL);
 		temp->argv = cmd_arg(args);
-		/*if (_strncmp("/", args, 1) == 0)*/
 		if (args[0] == '/')
 		{
 			temp->path = temp->argv[0];
