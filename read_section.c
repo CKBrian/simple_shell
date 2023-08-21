@@ -12,8 +12,7 @@ input_t *get_input(char **env)
 
 		if (write(STDOUT_FILENO, "($) ", _strlen("($) ")) == -1)
 			perror("Error: Write failed\n");
-		args = _getline(args, &len, STDIN_FILENO);
-		if (args == NULL)
+		if (_getline(&args, &len, STDIN_FILENO) == 0)
 		{
 			perror("Error: getline failed or EOF\n");
 			free(args);
