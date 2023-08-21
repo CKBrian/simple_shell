@@ -21,7 +21,6 @@ char *_getline(char *str, int *size, FILE *stream)
 		return (NULL);
 	}
 
-	fflush(stdout);
 	while (1)
 	{
 		fdr = read(STDIN_FILENO, &st, 1);

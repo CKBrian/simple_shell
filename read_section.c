@@ -20,7 +20,6 @@ input_t *get_input(char **env)
 			exit(98);
 		}
 
-		printf("%s\n", args);
 		temp = malloc(sizeof(input_t));
 		if (temp == NULL)
 			return (NULL);
