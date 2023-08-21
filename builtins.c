@@ -64,6 +64,26 @@ void _env(input_t *cmd, char **env_p)
   */
 void _chdir(input_t *cmd)
 {
-	if (chdir(cmd->argv[0]) != 0)
+	if (chdir(cmd->argv[1]) != 0)
 		perror("Error: chdir failed\n");
+}
+/**
+ * _setenv - Sets environment variables
+ * @name: Name of the variable
+ * @value: Value associated with the variable
+ * @overwrite: if 0 then variable name is not changed
+ * Return: 0 for success and -1 for success
+ */
+int _setenv(const char *name, const char *value, int overwrite)
+{
+
+}
+/**
+ * _unsetenv - Deletes environment variable
+ * @name: name of environment variable
+ * Return: 0 for success and -1 for failure
+ */
+int _unsetenv(const char *name)
+{
+
 }
