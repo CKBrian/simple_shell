@@ -8,17 +8,19 @@
 void exec_section(input_t *cmd, char **av)
 {
 	pid_t pid1;
-	int i, fder;
+	int i/*, fder*/;
 
 	pid1 = fork();
 	if (pid1 > 0)
 		wait(NULL);
 	if (pid1 == 0)
 	{
-		/*redirect stderror to /dev/null*/
-		fder = open("/dev/null", O_WRONLY);
-		dup2(fder, STDERR_FILENO);
-		close(fder);
+		/*
+		*redirect stderror to /dev/null
+		*fder = open("/dev/null", O_WRONLY);
+		*dup2(fder, STDERR_FILENO);
+		*close(fder);
+		*/
 		if (execve(cmd->path, cmd->argv, cmd->envp) == -1)
 		{
 			/*bin/sh: 1: qwerty: not found*/
