@@ -6,7 +6,7 @@
  */
 char **cmd_arg(char *str)
 {
-	char *temp, **token, *str3 = NULL, *str2 = NULL, delim[] = " \n";
+	char *temp, **token, *str3 = NULL, *str2 = NULL, delim[] = " |\n";
 	int i = 1, k = 0;
 
 	str2 = malloc(sizeof(char) * (_strlen(str) + 1));

@@ -24,9 +24,12 @@ int _getline(char **str, int *size, FILE *stream)
 	while (1)
 	{
 		fdr = read(STDIN_FILENO, &st, 1);
-
-		/*(void)fdr;*/
-		if (fdr <= 0 || st == '\n')
+		if (fdr <= 0)
+		{
+			(*str)[pos] = '\0';
+			return (-1);
+		}
+		else if (st == '\n')
 		{
 			(*str)[pos] = '\0';
 			return (pos);

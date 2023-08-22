@@ -2,19 +2,40 @@
 /**
  * exec_section - implements a simple shell
  * @cmd: pointer to a struct
+ * @av: program arguments
  * Return: Nothing
  */
-void exec_section(input_t *cmd)
+void exec_section(input_t *cmd, char **av)
 {
 	pid_t pid1;
+	int i, fder;
 
 	pid1 = fork();
 	if (pid1 > 0)
 		wait(NULL);
 	if (pid1 == 0)
 	{
+		/*redirect stderror to /dev/null*/
+		fder = open("/dev/null", O_WRONLY);
+		dup2(fder, STDERR_FILENO);
+		close(fder);
 		if (execve(cmd->path, cmd->argv, cmd->envp) == -1)
-			perror("execve: failed\n");
+		{
+			/*bin/sh: 1: qwerty: not found*/
+			write(1, av[0], _strlen(av[0]));
+			write(1, ": 1: ", 5);
+			for (i = 0; cmd->argv[i] != NULL; i++)
+			{
+				write(1, cmd->argv[i], _strlen(cmd->argv[i]));
+			}
+			write(1, ": not found\n", _strlen(": not found\n"));
+			/*free resources*/
+			free_struct(cmd);
+			if (cmd->pathFlag == 0)
+				free(cmd->path);
+			free(cmd);
+			exit(EXIT_FAILURE);
+		}
 	}
 }
 /**
@@ -34,6 +55,8 @@ int main(int ac, char **av, char **envp)
 	while (1)
 	{
 		cmd = get_input(envp);
+		if (cmd == NULL)
+			continue;
 		_exiting(cmd);
 		if (_strncmp(cmd->argv[0], "env", 3) == 0)
 			_env(cmd, envp);
@@ -42,7 +65,7 @@ int main(int ac, char **av, char **envp)
 			_chdir(cmd);
 		}
 		else
-			exec_section(cmd);
+			exec_section(cmd, av);
 
 		/*free(args);*/
 		free_struct(cmd);

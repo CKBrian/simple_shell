@@ -14,6 +14,7 @@ extern char **environ;
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <fcntl.h>
 
 /*structs*/
 
@@ -39,7 +40,7 @@ typedef struct input
  * @name: Name of environment variable
  * @value: value of the variable
  * @overwrite: permission to overwrite
- */
+ *
 
 typedef struct env_list
 {
@@ -49,7 +50,7 @@ typedef struct env_list
 	list_e *next;
 } list_e;
 
-/*prototypes*/
+*prototypes*/
 
 input_t *get_input(char **env);
 char **cmd_arg(char *str);
