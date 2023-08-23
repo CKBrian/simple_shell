@@ -11,6 +11,11 @@ void exec_section(input_t *cmd, char **av)
 	int i;
 
 	pid1 = fork();
+	if (pid1 < 0)
+	{
+		perror("fork");
+		return;
+	}
 	if (pid1 > 0)
 		wait(NULL);
 	if (pid1 == 0)
