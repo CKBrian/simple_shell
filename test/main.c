@@ -8,23 +8,29 @@
 void exec_section(input_t *cmd, char **av)
 {
 	pid_t pid1;
-	int i;
+	int i/*, fder*/;
 
 	pid1 = fork();
 	if (pid1 > 0)
 		wait(NULL);
 	if (pid1 == 0)
 	{
+		/*
+		*redirect stderror to /dev/null
+		*fder = open("/dev/null", O_WRONLY);
+		*dup2(fder, STDERR_FILENO);
+		*close(fder);
+		*/
 		if (execve(cmd->path, cmd->argv, cmd->envp) == -1)
 		{
 			/*bin/sh: 1: qwerty: not found*/
-			write(2, av[0], _strlen(av[0]));
-			write(2, ": 1: ", 5);
+			write(1, av[0], _strlen(av[0]));
+			write(1, ": 1: ", 5);
 			for (i = 0; cmd->argv[i] != NULL; i++)
 			{
-				write(2, cmd->argv[i], _strlen(cmd->argv[i]));
+				write(1, cmd->argv[i], _strlen(cmd->argv[i]));
 			}
-			write(2, ": not found\n", _strlen(": not found\n"));
+			write(1, ": not found\n", _strlen(": not found\n"));
 			/*free resources*/
 			free_struct(cmd);
 			if (cmd->pathFlag == 0)
@@ -51,6 +57,8 @@ int main(int ac, char **av, char **envp)
 	while (1)
 	{
 		cmd = get_input(envp);
+		if (cmd == NULL)
+			continue;
 		_exiting(cmd);
 		if (_strncmp(cmd->argv[0], "env", 3) == 0)
 			_env(cmd, envp);

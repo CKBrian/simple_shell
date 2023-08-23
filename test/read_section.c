@@ -7,17 +7,18 @@
 input_t *get_input(char **env)
 {
 	char *args = NULL;
-	int reads = 0, len = 10;
+	int reads = 0, len = 0;
 	input_t *temp;
 
 		if (write(STDOUT_FILENO, "($) ", _strlen("($) ")) == -1)
 			exit(EXIT_FAILURE);
 		reads = _getline(&args, &len, STDIN_FILENO);
-		if (reads == 0)
+		if (reads <= 0)
 		{
-			perror("EOF");
 			free(args);
-			exit(98);
+			if (reads == -1)
+				exit(98);
+			return (NULL);
 		}
 
 		temp = malloc(sizeof(input_t));
