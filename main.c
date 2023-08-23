@@ -23,6 +23,7 @@ void exec_section(input_t *cmd, char **av)
 			for (i = 0; cmd->argv[i] != NULL; i++)
 			{
 				write(2, cmd->argv[i], _strlen(cmd->argv[i]));
+				write(2, " ", 1);
 			}
 			write(2, ": not found\n", _strlen(": not found\n"));
 			/*free resources*/

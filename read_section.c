@@ -1,5 +1,17 @@
 #include "main.h"
 /**
+ * stderr_dump - redirects stderr message to /dev/null
+ * Return: nothing
+ */
+void stderr_dump(void)
+{
+	int fder;
+
+	fder = open("/dev/null", O_WRONLY);
+	if (dup2(fder, STDERR_FILENO) != -1)
+		close(fder);
+}
+/**
  * get_input - gets and processes temp from temp stream
  * @env: environment variables
  * Return: 1 if input is absolute path to executable else 0
@@ -10,15 +22,16 @@ input_t *get_input(char **env)
 	size_t len = 10;
 	input_t *temp;
 
+		if (isatty(STDIN_FILENO))
+		{
 		if (write(STDOUT_FILENO, "($) ", _strlen("($) ")) == -1)
 			exit(EXIT_FAILURE);
+		}
 		if (getline(&args, &len, stdin) == -1)
 		{
-			perror("EOF");
+			stderr_dump();
 			free(args);
-			exit(98);
-		}
-
+			exit(98); }
 		temp = malloc(sizeof(input_t));
 		if (temp == NULL)
 			return (NULL);
@@ -30,7 +43,6 @@ input_t *get_input(char **env)
 			free(args);
 			return (NULL);
 		}
-
 		temp->argv = arr_args;
 		if (args[0] == '/')
 		{
