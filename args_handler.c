@@ -23,9 +23,7 @@ char **cmd_arg(char *str)
 		temp = strtok(NULL, delim);
 		i++;
 	}
-
 	/* allocate memory and copy tokens to arguments array*/
-
 	token = malloc(sizeof(char *) * i);
 	if (token == NULL)
 		return (NULL);
@@ -39,10 +37,13 @@ char **cmd_arg(char *str)
 		temp = strtok(NULL, delim);
 	}
 	token[i - 1] = NULL;
-
-	/* free str2 */
 	free(str2);
 	free(str3);
-
+	if (token[0] == NULL)
+	{
+		free(token[0]);
+		free(token);
+		return (NULL);
+	}
 	return (token);
 }

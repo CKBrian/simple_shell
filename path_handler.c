@@ -6,15 +6,22 @@
  */
 char **path_find(char **env_p)
 {
-	int i;
-	char path[] = "PATH";
+	int i, n = 0;
+	char **path;
 
-	for (i = 0; env_p[i] != NULL; i++)
+	/*find no of env variables*/
+	while (env_p[n] != NULL)
 	{
-		if (_strncmp(env_p[i], path, 4))
-		{
-			return (cmd_arg(env_p[i]));
-		}
+		n++;
 	}
-	return (NULL);
+	/*allocate memory and copy env variables*/
+	path = malloc(sizeof(char *) * (n + 1));
+	for (i = 0; i < n; i++)
+	{
+		path[i] = malloc(sizeof(char) * (_strlen(env_p[i]) + 1));
+		_strcpy(path[i], env_p[i]);
+	}
+	path[i] = NULL;
+
+	return (path);
 }

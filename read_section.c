@@ -6,14 +6,13 @@
  */
 input_t *get_input(char **env)
 {
-	char *args = NULL;
-	int reads = 0, len = 10;
+	char **arr_args = NULL, *args = NULL;
+	size_t len = 10;
 	input_t *temp;
 
 		if (write(STDOUT_FILENO, "($) ", _strlen("($) ")) == -1)
 			exit(EXIT_FAILURE);
-		reads = _getline(&args, &len, STDIN_FILENO);
-		if (reads == 0)
+		if (getline(&args, &len, stdin) == -1)
 		{
 			perror("EOF");
 			free(args);
@@ -23,7 +22,16 @@ input_t *get_input(char **env)
 		temp = malloc(sizeof(input_t));
 		if (temp == NULL)
 			return (NULL);
-		temp->argv = cmd_arg(args);
+		arr_args = cmd_arg(args);
+		if (arr_args == NULL)
+		{
+			perror("NULL input");
+			free(temp);
+			free(args);
+			return (NULL);
+		}
+
+		temp->argv = arr_args;
 		if (args[0] == '/')
 		{
 			temp->path = temp->argv[0];
