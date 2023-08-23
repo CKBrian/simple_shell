@@ -17,7 +17,6 @@ void exec_section(input_t *cmd, char **av)
 	{
 		if (execve(cmd->path, cmd->argv, cmd->envp) == -1)
 		{
-			/*bin/sh: 1: qwerty: not found*/
 			write(2, av[0], _strlen(av[0]));
 			write(2, ": 1: ", 5);
 			for (i = 0; cmd->argv[i] != NULL; i++)
@@ -26,12 +25,6 @@ void exec_section(input_t *cmd, char **av)
 				write(2, " ", 1);
 			}
 			write(2, ": not found\n", _strlen(": not found\n"));
-			/*free resources*/
-			free_struct(cmd);
-			if (cmd->pathFlag == 0)
-				free(cmd->path);
-			free(cmd);
-			exit(EXIT_FAILURE);
 		}
 	}
 }

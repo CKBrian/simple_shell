@@ -19,7 +19,7 @@ void stderr_dump(void)
 input_t *get_input(char **env)
 {
 	char **arr_args = NULL, *args = NULL;
-	size_t len = 10;
+	int len = 10;
 	input_t *temp;
 
 		if (isatty(STDIN_FILENO))
@@ -27,7 +27,7 @@ input_t *get_input(char **env)
 		if (write(STDOUT_FILENO, "($) ", _strlen("($) ")) == -1)
 			exit(EXIT_FAILURE);
 		}
-		if (getline(&args, &len, stdin) == -1)
+		if (_getline(&args, &len, stdin) == 0)
 		{
 			stderr_dump();
 			free(args);
