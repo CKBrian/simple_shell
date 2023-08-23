@@ -34,23 +34,7 @@ typedef struct input
 	int pathFlag;
 } input_t;
 
-/**
- * struct env_list - list of environment variables
- * @next: pointer to the nnext node
- * @name: Name of environment variable
- * @value: value of the variable
- * @overwrite: permission to overwrite
- *
-
-typedef struct env_list
-{
-	char *name;
-	char *value;
-	int overwrite;
-	list_e *next;
-} list_e;
-
-*prototypes*/
+/*prototypes*/
 
 input_t *get_input(char **env);
 char **cmd_arg(char *str);
