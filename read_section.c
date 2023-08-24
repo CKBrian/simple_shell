@@ -31,7 +31,7 @@ input_t *get_input(char **env)
 		{
 			stderr_dump();
 			free(args);
-			exit(98); }
+			exit(0); }
 		temp = malloc(sizeof(input_t));
 		if (temp == NULL)
 			return (NULL);

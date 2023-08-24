@@ -3,9 +3,10 @@
  * exec_section - implements a simple shell
  * @cmd: pointer to a struct
  * @av: program arguments
+ * @num: tracks line number where error occurs
  * Return: Nothing
  */
-void exec_section(input_t *cmd, char **av)
+void exec_section(input_t *cmd, char **av, int num)
 {
 	pid_t pid1;
 	int i;
@@ -23,7 +24,9 @@ void exec_section(input_t *cmd, char **av)
 		if (execve(cmd->path, cmd->argv, cmd->envp) == -1)
 		{
 			write(2, av[0], _strlen(av[0]));
-			write(2, ": 1: ", 5);
+			write(2, ": ", 2);
+			write(2, to_strn(num), (_strlen(to_strn(num))));
+			write(2, ": ", 2);
 			for (i = 0; cmd->argv[i] != NULL; i++)
 			{
 				write(2, cmd->argv[i], _strlen(cmd->argv[i]));
@@ -43,6 +46,7 @@ void exec_section(input_t *cmd, char **av)
 int main(int ac, char **av, char **envp)
 {
 	input_t *cmd;
+	int prompt_no = 1;
 
 	(void)ac;
 	(void)av;
@@ -60,13 +64,14 @@ int main(int ac, char **av, char **envp)
 			_chdir(cmd);
 		}
 		else
-			exec_section(cmd, av);
+			exec_section(cmd, av, prompt_no);
 
 		/*free(args);*/
 		free_struct(cmd);
 		if (cmd->pathFlag == 0)
 			free(cmd->path);
 		free(cmd);
+		prompt_no++;
 	}
 
 	return (EXIT_SUCCESS);

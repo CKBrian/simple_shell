@@ -35,7 +35,7 @@ typedef struct input
 } input_t;
 
 /*prototypes*/
-
+char *to_strn(long int n);
 input_t *get_input(char **env);
 char **cmd_arg(char *str);
 char *_strcpy(char *dest, char *src);
