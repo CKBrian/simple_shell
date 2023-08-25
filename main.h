@@ -54,5 +54,5 @@ int _getline(char **str, int *size, FILE *stream);
 int _unsetenv(const char *name);
 int _setenv(const char *name, const char *value, int overwrite);
 char *_getenv(const char *name);
-
+char *com_search(char *name);
 #endif /* MAIN_H */

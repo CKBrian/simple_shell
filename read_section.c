@@ -39,7 +39,6 @@ input_t *get_input(char **env)
 		if (arr_args == NULL)
 		{
 			stderr_dump();
-			perror("NULL input");
 			free(temp);
 			free(args);
 			return (NULL);

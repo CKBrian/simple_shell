@@ -6,16 +6,18 @@
  * @num: tracks line number where error occurs
  * Return: Nothing
  */
-void exec_section(input_t *cmd, char **av, int num)
+int  exec_section(input_t *cmd, char **av, int num)
 {
 	pid_t pid1;
 	int i;
 
+	if (cmd->path[0] != '/')
+		return (127);
 	pid1 = fork();
 	if (pid1 < 0)
 	{
 		perror("fork");
-		return;
+		return(2);
 	}
 	if (pid1 > 0)
 		wait(NULL);
@@ -35,6 +37,7 @@ void exec_section(input_t *cmd, char **av, int num)
 			write(2, ": not found\n", _strlen(": not found\n"));
 		}
 	}
+	return (0);
 }
 /**
  * main - implements a simple shell
