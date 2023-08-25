@@ -17,7 +17,7 @@ int  exec_section(input_t *cmd, char **av, int num)
 	if (pid1 < 0)
 	{
 		perror("fork");
-		return(2);
+		return (2);
 	}
 	if (pid1 > 0)
 		wait(NULL);
@@ -35,6 +35,7 @@ int  exec_section(input_t *cmd, char **av, int num)
 				write(2, " ", 1);
 			}
 			write(2, ": not found\n", _strlen(": not found\n"));
+			return (2);
 		}
 	}
 	return (0);
