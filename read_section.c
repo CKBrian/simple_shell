@@ -38,22 +38,15 @@ input_t *get_input(char **env)
 		arr_args = cmd_arg(args);
 		if (arr_args == NULL)
 		{
+			stderr_dump();
 			perror("NULL input");
 			free(temp);
 			free(args);
 			return (NULL);
 		}
 		temp->argv = arr_args;
-		if (args[0] == '/')
-		{
-			temp->path = temp->argv[0];
-			temp->pathFlag = 1;
-		}
-		else
-		{
-			temp->pathFlag = 0;
-			temp->path = com_path(temp->argv[0]);
-		}
+		temp->pathFlag = 0;
+		temp->path = com_path(temp->argv[0]);
 		temp->envp = path_find(env);
 		free(args);
 

@@ -34,18 +34,26 @@ char *com_sort(char *name)
  */
 char *com_path(char *cmd_name)
 {
-	char *cmd, *path = "/bin/";
+	char *cmd, *name, *path = "/bin/";
 
 	if (_strncmp(cmd_name, "./", 2) == 0)
 	{
 		return (com_sort(cmd_name));
 	}
-
+	else if (cmd_name[0] == '/')
+	{
+		name = strtok(cmd_name, " ");
+		cmd = malloc(sizeof(char) * (_strlen(name) + 1));
+		_strcpy(cmd, name);
+	}
+	else
+	{
 	cmd = malloc(sizeof(char) * (_strlen(cmd_name) + _strlen(path) + 1));
 	if (cmd == NULL)
 		perror("malloc in com_path failed\n");
 	_strcpy(cmd, path);
 	_strcat(cmd, cmd_name);
+	}
 
 	return (cmd);
 }

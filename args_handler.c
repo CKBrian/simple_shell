@@ -1,4 +1,21 @@
 #include "main.h"
+
+/**
+ * space_check - checks for long spaces
+ * @str: input from standard input / command line
+ * Return: pointer to string arguments else NULL
+ */
+char *space_check(char *str)
+{
+	int i;
+
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		if (str[i] != ' ')
+			return (str);
+	}
+	return (NULL);
+}
 /**
  * cmd_arg - returns commandline string arguments
  * @str: input from standard input / command line
@@ -6,7 +23,7 @@
  */
 char **cmd_arg(char *str)
 {
-	char *temp, **token, *str3 = NULL, *str2 = NULL, delim[] = " |\n";
+	char *temp, **token, *str3 = NULL, *str2 = NULL, delim[] = " \n";
 	int i = 1, k = 0;
 
 	str2 = malloc(sizeof(char) * (_strlen(str) + 1));
