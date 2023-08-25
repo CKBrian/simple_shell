@@ -13,9 +13,11 @@ char *com_sort(char *name)
 	if (temp == NULL)
 		return (NULL);
 	_strcpy(temp, cwd);
-	cmd_name = strtok(name, ".~/");
+	if (_strncmp(name, "../", 3) == 0)
+		return (absolute_path(temp, name));
 
 	/*generate full path to command executable*/
+	cmd_name = strtok(name, ".~/");
 	cmd = malloc(sizeof(char) * (_strlen(name) + _strlen(temp) + 2));
 	if (cmd != NULL)
 	{
@@ -36,7 +38,8 @@ char *com_path(char *cmd_name)
 {
 	char *cmd, *name, *path = "/bin/";
 
-	if (_strncmp(cmd_name, "./", 2) == 0)
+	if (_strncmp(cmd_name, "./", 2) == 0 ||
+		_strncmp(cmd_name, "../", 3) == 0)
 	{
 		return (com_sort(cmd_name));
 	}
