@@ -13,8 +13,12 @@ char *com_sort(char *name)
 	if (temp == NULL)
 		return (NULL);
 	_strcpy(temp, cwd);
-	if (_strncmp(name, "../", 3) == 0)
-		return (absolute_path(temp, name));
+	if (_strncmp(name, "../", 3) == 0 ||
+		_strncmp(name, "./../", 5) == 0)
+	{
+		free(temp);
+		return (absolute_path(cwd, name));
+	}
 
 	/*generate full path to command executable*/
 	cmd_name = strtok(name, ".~/");

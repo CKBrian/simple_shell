@@ -6,13 +6,18 @@
  * @num: tracks line number where error occurs
  * Return: Nothing
  */
-int  exec_section(input_t *cmd, char **av, int num)
+int exec_section(input_t *cmd, char **av, int num)
 {
 	pid_t pid1;
 	int i;
+	char *snum;
 
 	if (cmd->path[0] != '/')
+	{
+		if (!isatty(STDIN_FILENO))
+			exit(127);
 		return (127);
+	}
 	pid1 = fork();
 	if (pid1 < 0)
 	{
@@ -25,9 +30,10 @@ int  exec_section(input_t *cmd, char **av, int num)
 	{
 		if (execve(cmd->path, cmd->argv, cmd->envp) == -1)
 		{
+			snum = to_strn(num);
 			write(2, av[0], _strlen(av[0]));
 			write(2, ": ", 2);
-			write(2, to_strn(num), (_strlen(to_strn(num))));
+			write(2, snum, (_strlen(snum)));
 			write(2, ": ", 2);
 			for (i = 0; cmd->argv[i] != NULL; i++)
 			{
@@ -35,6 +41,7 @@ int  exec_section(input_t *cmd, char **av, int num)
 				write(2, " ", 1);
 			}
 			write(2, ": not found\n", _strlen(": not found\n"));
+			free(snum);
 			return (2);
 		}
 	}
@@ -60,7 +67,8 @@ int main(int ac, char **av, char **envp)
 		cmd = get_input(envp);
 		if (cmd == NULL)
 			continue;
-		_exiting(cmd);
+		if (_strncmp(cmd->argv[0], "exit", 4) == 0)
+			_exiting(cmd);
 		if (_strncmp(cmd->argv[0], "env", 3) == 0)
 			_env(cmd, envp);
 		else if (_strncmp(cmd->argv[0], "cd", 2) == 0)
