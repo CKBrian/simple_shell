@@ -40,7 +40,7 @@ char *com_sort(char *name)
  */
 char *com_path(char *cmd_name)
 {
-	char *cmd, *name, *path = "/bin/";
+	char *cmd, *str, *name, *path = "/bin/";
 
 	if (_strncmp(cmd_name, "./", 2) == 0 ||
 		_strncmp(cmd_name, "../", 3) == 0)
@@ -55,7 +55,11 @@ char *com_path(char *cmd_name)
 	}
 	else
 	{
-	/*path = com_search(cmd_name);*/
+	str = com_search(cmd_name);
+	if (str != NULL)
+		free(str);
+	else
+		return (NULL);
 	cmd = malloc(sizeof(char) * (_strlen(cmd_name) + _strlen(path) + 1));
 	if (cmd == NULL)
 		perror("malloc in com_path failed\n");

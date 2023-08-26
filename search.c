@@ -38,5 +38,5 @@ char *com_search(char *name)
 	}
 	free(path);
 
-	return (name);
+	return (NULL);
 }

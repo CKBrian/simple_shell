@@ -12,7 +12,7 @@ int exec_section(input_t *cmd, char **av, int num)
 	int i;
 	char *snum;
 
-	if (cmd->path[0] != '/')
+	if (cmd->path == NULL || cmd->envp == NULL)
 	{
 		if (!isatty(STDIN_FILENO))
 			exit(127);
