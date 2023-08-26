@@ -13,12 +13,9 @@ char *com_sort(char *name)
 	if (temp == NULL)
 		return (NULL);
 	_strcpy(temp, cwd);
-	if (_strncmp(name, "../", 3) == 0 ||
-		_strncmp(name, "./../", 5) == 0)
-	{
-		free(temp);
-		return (absolute_path(cwd, name));
-	}
+	if (_strncmp(name, "../", 3) == 0)
+		return (absolute_path(temp, name));
+
 	/*generate full path to command executable*/
 	cmd_name = strtok(name, ".~/");
 	cmd = malloc(sizeof(char) * (_strlen(name) + _strlen(temp) + 2));
@@ -39,7 +36,7 @@ char *com_sort(char *name)
  */
 char *com_path(char *cmd_name)
 {
-	char *cmd, *name, *path /*= "/bin/"*/;
+	char *cmd, *name, *path = "/bin/";
 
 	if (_strncmp(cmd_name, "./", 2) == 0 ||
 		_strncmp(cmd_name, "../", 3) == 0)
@@ -54,16 +51,13 @@ char *com_path(char *cmd_name)
 	}
 	else
 	{
-	path = com_search(cmd_name);
-	if (_strncmp(path, cmd_name, _strlen(path)) == 0)
-		return (path);
-	cmd = malloc(sizeof(char) * (_strlen(cmd_name) + _strlen(path) + 2));
+	/*path = com_search(cmd_name);*/
+	cmd = malloc(sizeof(char) * (_strlen(cmd_name) + _strlen(path) + 1));
 	if (cmd == NULL)
 		perror("malloc in com_path failed\n");
 	_strcpy(cmd, path);
-	_strcat(cmd, "/");
+	/*_strcat(cmd, "/");*/
 	_strcat(cmd, cmd_name);
-	free(path);
 	}
 
 	return (cmd);

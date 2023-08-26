@@ -9,7 +9,7 @@ char *com_search(char *name)
 {
 	struct dirent *entry;
 	DIR *dir;
-	char *path, *path3, *path2, *temp, *dir_name;
+	char *path, *path2, *temp, *dir_name;
 
 	path2 = _getenv("PATH");
 	path = malloc(sizeof(char) * (_strlen(path2) + 1));
@@ -26,10 +26,8 @@ char *com_search(char *name)
 			if (_strncmp(name, dir_name, _strlen(dir_name)) == 0)
 			{
 				closedir(dir);
-				path3 = malloc(sizeof(char) * (_strlen(temp) + 1));
-				_strcpy(path3, temp);
 				free(path);
-				return (path3);
+				return (temp);
 			}
 		}
 		closedir(dir);

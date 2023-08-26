@@ -25,13 +25,18 @@ int tokenizer(char *dir)
  */
 char *name_tokenizer(char *dir)
 {
-	int i = 0, len, k = 0;
+	int i, len, k;
 	char *name;
 
-	while (dir[i] != '\0' && (dir[i] == '.' || dir[i] == '/'))
-		i++;
-	len = _strlen(&dir[i]);
-	name = malloc(sizeof(char) * (len + 1));
+	for (i = 0; dir[i] != '\0'; i++)
+	{
+		if (dir[i] != '.' && dir[i] != '/')
+		{
+		break;
+		}
+	}
+	len = _strlen(dir);
+	name = malloc(sizeof(char) * (len - i + 1));
 	if (name == NULL)
 	{
 		return (NULL);
@@ -89,7 +94,7 @@ char *absolute_path(char *cwd, char *dir)
 		free(str2);
 		free(str3);
 		return (NULL); }
-	path = malloc(sizeof(char) * (len + _strlen(name) + 1));
+	path = malloc(sizeof(char) * len);
 	if (path == NULL)
 	{
 		free_pointers(str2, str3, name);

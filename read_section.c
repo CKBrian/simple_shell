@@ -39,7 +39,6 @@ input_t *get_input(char **env)
 		if (arr_args == NULL)
 		{
 			stderr_dump();
-			perror("NULL input");
 			free(temp);
 			free(args);
 			return (NULL);
@@ -47,8 +46,6 @@ input_t *get_input(char **env)
 		temp->argv = arr_args;
 		temp->pathFlag = 0;
 		temp->path = com_path(temp->argv[0]);
-		if (_strncmp(temp->path, temp->argv[0], _strlen(temp->path)) == 0)
-			temp->pathFlag = 1;
 		temp->envp = path_find(env);
 		free(args);
 
