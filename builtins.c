@@ -16,7 +16,14 @@ void _exiting(input_t *cmd)
 	{
 		if (cmd->argv[1])
 		{
-			status = atoi(cmd->argv[1]);
+			status = _atoi(cmd->argv[1]);
+			if (status < 0)
+			{
+				write(STDERR_FILENO, cmd->argv[0], _strlen(cmd->argv[0]));
+				perror(": 1: exit: Illegal number: ");
+				write(STDERR_FILENO, cmd->argv[1], _strlen(cmd->argv[1]));
+				status = 2;
+			}
 
 	/*free struct elements, path element and cmd struct pointer*/
 			if (cmd->pathFlag == 0)

@@ -35,6 +35,7 @@ typedef struct input
 } input_t;
 
 /*prototypes*/
+int _atoi(char *s);
 char *absolute_path(char *cwd, char *dir);
 char *to_strn(long int n);
 input_t *get_input(char **env);
