@@ -4,12 +4,16 @@
  * @status: exit status or termination status of child process
  * Return: exit status value
  */
-int wexit(int status)
+int wexit(int status, input_t *cmd)
 {
 	if (WIFEXITED(status))
 	{
 		if (isatty(STDIN_FILENO))
 			return (WEXITSTATUS(status));
+		free_struct(cmd);
+		if (cmd->pathFlag == 0)
+			free(cmd->path);
+		free(cmd);
 		exit(WEXITSTATUS(status));
 	}
 	return (WEXITSTATUS(status));
@@ -40,7 +44,7 @@ int exec_section(input_t *cmd, char **av, int num)
 	if (pid1 > 0)
 	{
 		waitpid(pid1, &wstatus, 0);
-		return (wexit(wstatus)); }
+		return (wexit(wstatus, cmd)); }
 		wait(NULL);
 	if (pid1 == 0)
 	{
