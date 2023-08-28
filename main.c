@@ -1,5 +1,20 @@
 #include "main.h"
 /**
+ * wexit - returns the exit status of child process
+ * @status: exit status or termination status of child process
+ * Return: exit status value
+ */
+int wexit(int status)
+{
+	if (WIFEXITED(status))
+	{
+		if (isatty(STDIN_FILENO))
+			return (WEXITSTATUS(status));
+		exit(WEXITSTATUS(status));
+	}
+	return (WEXITSTATUS(status));
+}
+/**
  * exec_section - implements a simple shell
  * @cmd: pointer to a struct
  * @av: program arguments
@@ -9,22 +24,23 @@
 int exec_section(input_t *cmd, char **av, int num)
 {
 	pid_t pid1;
-	int i;
+	int i, wstatus;
 	char *snum;
 
 	if (cmd->path == NULL || cmd->envp == NULL)
 	{
 		if (!isatty(STDIN_FILENO))
 			exit(127);
-		return (127);
-	}
+		return (127); }
 	pid1 = fork();
 	if (pid1 < 0)
 	{
 		perror("fork");
-		return (2);
-	}
+		return (2); }
 	if (pid1 > 0)
+	{
+		waitpid(pid1, &wstatus, 0);
+		return (wexit(wstatus)); }
 		wait(NULL);
 	if (pid1 == 0)
 	{
