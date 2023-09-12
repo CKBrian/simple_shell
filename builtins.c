@@ -57,8 +57,10 @@ void _env(input_t *cmd, char **env_p)
 
 	(void)cmd;
 	(void)env_p;
-	while (environ[i] != NULL && environ[i][0] != '_')
+	while (environ[i] != NULL)
 	{
+		if (environ[i][0] == '_')
+			exit(0);
 		write(STDOUT_FILENO, environ[i], _strlen(environ[i]));
 		write(2, "\n", 1);
 		i++;
