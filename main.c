@@ -89,8 +89,8 @@ int main(int ac, char **av, char **envp)
 			continue;
 		if (_strncmp(cmd->argv[0], "exit", 4) == 0)
 			_exiting(cmd);
-		if (_strncmp(cmd->argv[0], "env", 3) == 0)
-			_env(cmd, envp);
+		/*if (_strncmp(cmd->argv[0], "env", 3) == 0)
+			_env(cmd, envp);*/
 		else if (_strncmp(cmd->argv[0], "cd", 2) == 0)
 		{
 			_chdir(cmd);
